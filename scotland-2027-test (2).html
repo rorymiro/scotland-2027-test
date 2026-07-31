@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scotland 2027 | LLE × Miro Sounds</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root{
+    --ink:#15130F;
+    --ink-soft:#1E1B15;
+    --card:#1B1812;
+    --parchment:#EDE6D6;
+    --parchment-dim:#B7AF9E;
+    --maroon:#7A2033;
+    --maroon-bright:#A5304A;
+    --heather:#9C87A6;
+    --gold:#C08A34;
+    --line:#39352C;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--parchment);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--maroon); color:var(--parchment); }
+
+  a{ color:inherit; }
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---- top bar ---- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+  }
+  .topbar .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .mark{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--parchment-dim);
+  }
+  .mark strong{ color:var(--gold); font-weight:500; }
+  .confidential{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--heather);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:2px;
+  }
+
+  /* ---- saltire divider ---- */
+  .saltire{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:56px 0 40px;
+  }
+  .saltire::before, .saltire::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  .saltire svg{ flex-shrink:0; opacity:0.9; }
+
+  /* ---- hero ---- */
+  .hero{
+    padding:64px 0 8px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 22px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(2.6rem, 6vw, 4.2rem);
+    line-height:1.02;
+    margin:0 0 6px;
+    color:var(--parchment);
+  }
+  .subtitle{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:1.3rem;
+    color:var(--heather);
+    margin:0 0 34px;
+  }
+  .lede{
+    font-size:1.08rem;
+    color:var(--parchment-dim);
+    max-width:640px;
+  }
+
+  /* ---- section headers ---- */
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:2rem;
+    margin:0 0 14px;
+  }
+  .section-head p{
+    color:var(--parchment-dim);
+    max-width:620px;
+  }
+
+  .direction-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--maroon-bright);
+    margin:0 0 10px;
+  }
+
+  /* ---- orchestra tickets ---- */
+  .tickets{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:26px 0 10px;
+  }
+  .ticket{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    color:var(--parchment);
+    background:var(--card);
+    border:1px dashed var(--heather);
+    border-radius:2px;
+    padding:9px 14px;
+    position:relative;
+  }
+  .collab-label{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:1rem;
+    margin:34px 0 -6px;
+  }
+
+  /* ---- artist cards ---- */
+  .artist{
+    display:flex;
+    gap:36px;
+    align-items:flex-start;
+    margin:50px 0;
+    padding-bottom:50px;
+    border-bottom:1px solid var(--line);
+  }
+  .artist:last-of-type{ border-bottom:none; }
+  .artist.flip{ flex-direction:row-reverse; }
+
+  .artist-media{ flex:1 1 46%; min-width:280px; }
+  .artist-text{ flex:1 1 54%; min-width:280px; }
+
+  .video-frame{
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%;
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .video-frame iframe{
+    position:absolute;
+    top:0; left:0; width:100%; height:100%;
+    border:0;
+  }
+
+  .artist-number{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--parchment-dim);
+    letter-spacing:0.1em;
+  }
+  .artist-text h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.9rem;
+    margin:6px 0 14px;
+  }
+  .artist-text p{
+    color:var(--parchment-dim);
+    margin:0;
+  }
+
+  .callout{
+    margin-top:20px;
+    border-left:2px solid var(--gold);
+    padding:4px 0 4px 18px;
+    font-size:0.94rem;
+    color:var(--parchment);
+    background:rgba(192,138,52,0.06);
+  }
+  .callout strong{ color:var(--gold); font-weight:500; }
+
+  /* ---- footer ---- */
+  footer{
+    margin-top:70px;
+    padding:34px 0 60px;
+    border-top:1px solid var(--line);
+    font-size:0.86rem;
+    color:var(--parchment-dim);
+  }
+  footer .note{
+    font-style:italic;
+    font-family:'Fraunces',serif;
+    color:var(--heather);
+    margin-bottom:14px;
+  }
+  footer .contact{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+  }
+  footer .contact a{ color:var(--parchment); text-decoration:none; border-bottom:1px solid var(--line); }
+
+  @media (max-width:700px){
+    .artist, .artist.flip{ flex-direction:column; }
+    .topbar .wrap{ flex-direction:column; align-items:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="mark"><strong>MIRO</strong> SOUNDS</div>
+    <div class="confidential">Confidential Proposal</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">LLE × Miro Sounds</p>
+    <h1>Scotland 2027</h1>
+    <p class="subtitle">Initial creative ideas — Friday Welcome Party</p>
+    <p class="lede">This initial set of ideas is intended as a creative starting point rather than a finished recommendation set. Artists have been grouped into a series of creative directions to explore — from contemporary orchestral and folk collaborations to vocal ensembles. The ambition is to work with Scotland's finest artists, composers and collaborators to create entertainment that feels authentically Scottish, unique to this wedding, and perfectly suited to the couple and the setting.</p>
+  </div>
+
+  <div class="saltire" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 26 26"><path d="M2 2 L24 24 M24 2 L2 24" stroke="#C08A34" stroke-width="1.4"/></svg>
+  </div>
+
+  <div class="section-head reveal">
+    <p class="eyebrow" style="color:var(--heather)">Friday — Welcome Party</p>
+    <h2>Set in a Scottish National Park</h2>
+    <p>A major creative opportunity of the weekend — a standout performance that could become the focal point of the evening. Open to one headline performance, or a combination of an arrival performance followed by a main act. A performance that should feel atmospheric, elegant, and rooted in a sense of place.</p>
+  </div>
+
+  <div style="margin-top:54px;" class="reveal">
+    <p class="direction-tag">Creative Direction 01</p>
+    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.7rem; margin:0 0 12px;">Contemporary Artist with Renowned Scottish Orchestra</h2>
+    <p style="color:var(--parchment-dim); max-width:620px;">A Scottish orchestra collaborating with a contemporary artist, or staging a showcase with an exciting modern twist — pairing the scale and prestige of a full orchestra with a genuinely current, crowd-facing sound.</p>
+
+    <div class="tickets">
+      <div class="ticket">Royal Scottish National Orchestra</div>
+      <div class="ticket">Scottish Chamber Orchestra</div>
+      <div class="ticket">BBC Scottish Symphony Orchestra</div>
+    </div>
+    <p class="collab-label">→ collaborating with</p>
+  </div>
+
+  <!-- Artist 01 -->
+  <div class="artist reveal">
+    <div class="artist-media">
+      <div class="video-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/W696Pgw_Br0" title="Lewis Capaldi" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    </div>
+    <div class="artist-text">
+      <span class="artist-number">01</span>
+      <h3>Lewis Capaldi</h3>
+      <p>Epic Scottish singer-songwriter blending stripped-back piano ballads with soaring anthems. One of the UK's biggest global artists, with multiple No.1 albums and singles, combining an extraordinary connection with audiences and songs that have resonated around the world.</p>
+    </div>
+  </div>
+
+  <!-- Artist 02 -->
+  <div class="artist flip reveal">
+    <div class="artist-media">
+      <div class="video-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/2FpT6vNGhr8" title="Paolo Nutini" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    </div>
+    <div class="artist-text">
+      <span class="artist-number">02</span>
+      <h3>Paolo Nutini</h3>
+      <p>Scottish singer-songwriter celebrated for his unmistakable voice and genre-spanning sound, blending soul, rock, folk and blues. A hugely respected live performer, his music feels both deeply personal and effortlessly timeless.</p>
+    </div>
+  </div>
+
+  <!-- Artist 03 -->
+  <div class="artist reveal">
+    <div class="artist-media">
+      <div class="video-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/i_h8eydNK8k?start=42" title="Travis" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    </div>
+    <div class="artist-text">
+      <span class="artist-number">03</span>
+      <h3>Travis</h3>
+      <p>Iconic Scottish alt-rock band whose melodic songwriting helped define British guitar music in the late 90s and early 00s. Their timeless catalogue and understated style continue to influence generations of artists, including Coldplay and Keane.</p>
+      <div class="callout"><strong>Real precedent, not a stretch</strong> — the BBC Scottish Symphony Orchestra performed a full live collaboration with Travis at Glasgow's Barrowland Ballroom in 2016, broadcast on BBC One. This exact pairing already exists.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="note">This is a small formatting test — Saturday, and the remaining creative directions for Friday, to follow in the same format.</p>
+    <p class="contact">This proposal is shared exclusively for evaluating entertainment options for this event and should be treated as strictly confidential.<br>
+    mirosounds.com &nbsp;·&nbsp; <a href="mailto:rory@mirosounds.com">rory@mirosounds.com</a> &nbsp;·&nbsp; +44 7444 840 752</p>
+  </footer>
+
+</div>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    els.forEach(el=>io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
