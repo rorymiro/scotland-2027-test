@@ -52,13 +52,21 @@
   /* ---- top bar ---- */
   .topbar{ border-bottom:1px solid var(--line); padding:20px 0; position:sticky; top:0; background:rgba(21,10,13,0.94); backdrop-filter:blur(6px); z-index:50; }
   .topbar .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-  .mark{ font-family:'Atelier','Quicksand',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.08em; text-transform:uppercase; color:var(--cream); }
-  .mark span{ color:var(--maroon-bright); }
+  .mark{ font-family:'Atelier','Quicksand',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.08em; text-transform:uppercase; color:var(--maroon-bright); }
   .confidential{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream-dim); border:1px solid var(--line); padding:5px 10px; border-radius:2px; }
 
-  .jumpnav{ display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px; }
-  .jumpnav a{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream-dim); text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px; }
-  .jumpnav a:hover{ color:var(--cream); border-bottom-color:var(--maroon-bright); }
+  .jumpnav{ display:flex; align-items:center; flex-wrap:wrap; gap:8px 22px; margin-top:14px; }
+  .nav-dropdown{ position:relative; }
+  .nav-toggle{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream-dim); background:none; border:none; cursor:pointer; padding:0 0 2px; border-bottom:1px solid transparent; display:flex; align-items:center; gap:6px; }
+  .nav-toggle:hover, .nav-toggle[aria-expanded="true"]{ color:var(--cream); border-bottom-color:var(--maroon-bright); }
+  .nav-toggle svg{ transition:transform 0.2s ease; }
+  .nav-toggle[aria-expanded="true"] svg{ transform:rotate(180deg); }
+  .nav-panel{ display:none; position:absolute; top:100%; left:0; margin-top:12px; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px 0; min-width:260px; box-shadow:0 12px 28px rgba(0,0,0,0.35); }
+  .nav-panel.open{ display:block; }
+  .nav-panel a{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--cream-dim); text-decoration:none; padding:9px 18px; }
+  .nav-panel a:hover{ color:var(--cream); background:var(--card-hover); }
+  .nav-static{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--line); display:flex; align-items:center; gap:8px; }
+  .soon-tag{ font-size:9px; border:1px solid var(--line); border-radius:8px; padding:2px 7px; letter-spacing:0.04em; }
 
   /* ---- hero ---- */
   .hero{ padding:60px 0 10px; }
@@ -72,13 +80,18 @@
   .saltire svg{ flex-shrink:0; opacity:0.9; }
 
   /* ---- overview / summary grid ---- */
-  .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin:30px 0 8px; }
-  .summary-card{ background:var(--card); border:1px solid var(--line); border-radius:6px; padding:18px 18px 16px; text-decoration:none; color:var(--cream); display:block; transition:background 0.2s ease, transform 0.2s ease; }
-  .summary-card:hover{ background:var(--card-hover); transform:translateY(-2px); }
-  .summary-card .num{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--maroon-bright); letter-spacing:0.08em; }
-  .summary-card h4{ font-family:'Atelier','Quicksand',sans-serif; font-weight:700; font-size:1.08rem; margin:8px 0 8px; }
-  .summary-card p{ font-size:0.86rem; color:var(--cream-dim); margin:0 0 10px; }
-  .summary-card .count{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--cream-dim); }
+  .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:26px 0 8px; }
+  .summary-card{ background:var(--card); border:1px solid var(--line); border-radius:6px; padding:16px 18px; transition:background 0.2s ease; }
+  .summary-card:hover{ background:var(--card-hover); }
+  .summary-card .num{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--maroon-bright); letter-spacing:0.08em; }
+  .summary-card h4{ font-family:'Atelier','Quicksand',sans-serif; font-weight:700; font-size:1rem; margin:6px 0 6px; }
+  .summary-card h4 a{ color:var(--cream); text-decoration:none; }
+  .summary-card h4 a:hover{ border-bottom:1px solid var(--maroon-bright); }
+  .summary-card p{ font-size:0.8rem; color:var(--cream-dim); margin:0 0 10px; line-height:1.45; }
+  .summary-artists{ display:flex; flex-wrap:wrap; gap:5px 0; font-size:0.8rem; }
+  .summary-artists a{ color:var(--cream-dim); text-decoration:none; border-bottom:1px dotted var(--line); }
+  .summary-artists a:hover{ color:var(--cream); border-bottom-color:var(--maroon-bright); }
+  .summary-artists .sep{ color:var(--line); margin:0 6px; }
 
   .note-panel{ margin:26px 0 6px; border-left:2px solid var(--maroon-bright); background:rgba(138,27,50,0.10); padding:14px 18px; font-size:0.94rem; color:var(--cream); border-radius:0 4px 4px 0; }
 
@@ -96,22 +109,26 @@
   .cat-intro{ color:var(--cream-dim); max-width:720px; margin:0 0 10px; }
 
   /* ---- orchestra tickets ---- */
-  .orch-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; margin:28px 0 6px; }
-  .orch-card{ background:var(--card); border:1px solid var(--line); border-radius:6px; padding:18px 20px; }
-  .orch-card h4{ font-family:'Atelier','Quicksand',sans-serif; font-size:1.02rem; margin:0 0 8px; color:var(--cream); }
-  .orch-card p{ font-size:0.88rem; color:var(--cream-dim); margin:0; }
+  .orch-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:26px 0 6px; }
+  .orch-card{ background:var(--card); border:1px solid var(--line); border-radius:6px; padding:15px 16px; }
+  .orch-card h4{ font-family:'Atelier','Quicksand',sans-serif; font-size:0.92rem; line-height:1.25; margin:0 0 7px; color:var(--cream); }
+  .orch-card p{ font-size:0.82rem; color:var(--cream-dim); margin:0; line-height:1.55; }
+  @media (max-width:820px){ .orch-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .orch-grid{ grid-template-columns:1fr; } }
   .collab-divider{ display:flex; align-items:center; justify-content:center; gap:10px; margin:34px 0 6px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--maroon-bright); }
   .collab-divider::before,.collab-divider::after{ content:""; width:36px; height:1px; background:var(--line); }
 
   /* ---- artist grid ---- */
-  .artist-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); gap:22px; margin:30px 0 10px; }
+  .artist-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); gap:22px; margin:30px 0 10px; align-items:start; }
   .artist-card{ background:var(--card); border:1px solid var(--line); border-radius:8px; padding:20px 22px 22px; display:flex; flex-direction:column; }
+  .artist-card.wide{ grid-column:1 / -1; }
   .artist-name-row{ display:flex; align-items:center; gap:9px; margin-bottom:8px; }
   .artist-name{ font-family:'Atelier','Quicksand',sans-serif; font-weight:700; font-size:1.35rem; color:var(--cream); }
-  .artist-card p.desc{ font-size:0.92rem; color:var(--cream-dim); margin:0 0 16px; }
+  .artist-card p.desc{ font-size:0.92rem; color:var(--cream-dim); margin:0 0 18px; }
 
-  .video-row{ display:flex; flex-wrap:wrap; gap:12px; margin-top:auto; }
-  .video-slot{ flex:1 1 220px; min-width:200px; }
+  .video-row{ display:flex; flex-wrap:wrap; gap:16px; margin-top:6px; }
+  .artist-card:not(.wide) .video-row{ margin-top:auto; padding-top:18px; }
+  .video-slot{ flex:1 1 260px; min-width:220px; max-width:460px; }
   .video-cap{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--maroon-bright); text-transform:uppercase; margin:0 0 6px; display:block; }
   .video-frame{ position:relative; width:100%; padding-bottom:56.25%; background:var(--ink-soft); border:1px solid var(--line); border-radius:4px; overflow:hidden; cursor:pointer; }
   .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
@@ -137,6 +154,8 @@
   /* ---- next steps / terms / footer ---- */
   .info-block{ margin:60px 0 0; border-top:1px solid var(--line); padding-top:44px; }
   .info-block h3{ font-size:1.4rem; margin:0 0 16px; display:flex; align-items:center; gap:10px; }
+  .info-block h3 svg{ flex-shrink:0; }
+  .icon-inline{ display:inline-flex; vertical-align:middle; margin-right:4px; }
   .info-block ol, .info-block ul{ color:var(--cream-dim); font-size:0.95rem; padding-left:22px; }
   .info-block li{ margin-bottom:10px; }
   .info-block strong{ color:var(--cream); }
@@ -144,8 +163,10 @@
   footer{ margin-top:60px; padding:36px 0 60px; border-top:1px solid var(--line); }
   footer .about{ font-size:0.94rem; color:var(--cream-dim); max-width:620px; margin-bottom:22px; }
   footer .about strong{ color:var(--cream); }
-  .contact-box{ background:var(--maroon-deep); border-radius:6px; padding:16px 20px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.02em; color:var(--cream); }
-  .contact-box a{ text-decoration:none; border-bottom:1px solid rgba(251,239,210,0.4); }
+  .contact-box{ background:var(--maroon-deep); border-radius:6px; padding:20px 22px; max-width:560px; }
+  .contact-note{ font-family:'Quicksand',sans-serif; font-size:0.92rem; color:var(--cream); margin:0 0 14px; }
+  .contact-links{ display:flex; flex-wrap:wrap; gap:8px 22px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.02em; color:var(--cream); }
+  .contact-links a{ color:var(--cream); text-decoration:none; border-bottom:1px solid rgba(251,239,210,0.4); }
 
   @media (max-width:700px){
     .artist-grid{ grid-template-columns:1fr; }
@@ -162,8 +183,14 @@
 <div class="topbar">
   <div class="wrap">
     <div style="flex:1;">
-      <div class="mark">MIRO <span>SOUNDS</span></div>
-      <nav class="jumpnav" id="jumpnav"></nav>
+      <div class="mark">MIRO SOUNDS</div>
+      <nav class="jumpnav">
+        <div class="nav-dropdown">
+          <button class="nav-toggle" id="fridayToggle" type="button" aria-expanded="false">Friday <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+          <div class="nav-panel" id="fridayPanel"></div>
+        </div>
+        <span class="nav-static">Saturday <span class="soon-tag">soon</span></span>
+      </nav>
     </div>
     <div class="confidential">Confidential Proposal</div>
   </div>
@@ -174,38 +201,24 @@
   <div class="hero">
     <p class="eyebrow">LLE × Miro Sounds</p>
     <h1>Scotland 2027</h1>
-    <p class="subtitle">Friday Welcome Party — Initial Creative Ideas</p>
-    <p class="lede">This initial set of ideas is intended as a creative starting point, a longlist of artists and references, grouped into directions to explore — from contemporary orchestral and folk collaborations to vocal ensembles. The ambition is to work with the best artists, composers and collaborators, Scottish wherever relevant, to curate exceptional entertainment that feels authentic, unique to this wedding, and perfectly suited to the setting and the couple.</p>
+    <p class="lede">This initial set of ideas is intended as a creative starting point, a longlist of artists and references, grouped into directions to explore - from contemporary orchestral and folk collaborations to vocal ensembles. The ambition is to work with the best artists, composers and collaborators, Scottish wherever relevant, to curate exceptional entertainment that feels authentic, unique to this wedding, and perfectly suited to the setting and the couple.</p>
   </div>
 
   <div class="saltire" aria-hidden="true">
     <svg width="24" height="24" viewBox="0 0 26 26"><path d="M2 2 L24 24 M24 2 L2 24" stroke="#B7314F" stroke-width="1.4"/></svg>
   </div>
 
-  <p class="eyebrow" style="margin-bottom:8px;">Overview</p>
-  <h2 class="cat-title">Friday — Welcome Party</h2>
-  <p class="cat-intro">A major creative opportunity of the weekend — a standout performance that could become a focal point of the evening, something more background, or a combination of the two. And it should feel atmospheric, elegant and in line with the striking surroundings.</p>
+  <h2 class="cat-title" id="friday">Friday - Welcome Party</h2>
+  <p class="cat-intro">A major creative opportunity of the weekend - a standout performance that could become a focal point of the evening, something more background, or a combination of the two. And it should feel atmospheric, elegant and in line with the striking surroundings.</p>
 
   <div id="summary-grid" class="summary-grid"></div>
 
   <div class="note-panel">Having worked with and recently engaged with many of these artists and representatives, there is also an exciting opportunity to 'mix and match' and collaborate across these directions.</div>
 
-  <div class="soon">
-    <p class="tag">Saturday — Wedding Day</p>
-    <h2>Coming soon</h2>
-    <div class="chip-row">
-      <span class="chip">Ceremony</span>
-      <span class="chip">Journey from Ceremony</span>
-      <span class="chip">Drinks Reception</span>
-      <span class="chip">Dinner</span>
-      <span class="chip">DJs</span>
-    </div>
-  </div>
-
   <div id="categories"></div>
 
   <div class="info-block">
-    <h3>➡️ Next Steps</h3>
+    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B7314F" stroke-width="2"><path d="M4 12h14M13 6l6 6-6 6"/></svg> Next Steps</h3>
     <ol>
       <li>Once we've identified the concepts, artists and creative directions that resonate most, we can progress to <strong>availability, fees, intro negotiation and any bespoke opportunities</strong>.</li>
       <li>Aim to also <strong>get deeper with the client, understand their general music tastes</strong>, and who and what they like out of the above. Client music consultancy available and/or we can share some questions. We'd love a link to their Spotify, or similar, if possible!</li>
@@ -214,11 +227,11 @@
   </div>
 
   <div class="info-block">
-    <h3>📝 Proposal Terms</h3>
+    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B7314F" stroke-width="1.8"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg> Proposal Terms</h3>
     <ul>
       <li>This proposal and any recommendations shared are exclusively for the purpose of evaluating entertainment options for this event.</li>
       <li>The proposal is confidential, and may be shared for 'internal' planning purposes only, but may not be shared externally with artists, agencies, or unrelated third parties.</li>
-      <li>Non-circumvention obligation — any artists or suppliers recommended by Miro Sounds, within or outside of this proposal, must be booked through Miro Sounds, unless otherwise agreed in writing.</li>
+      <li>Non-circumvention obligation - any artists or suppliers recommended by Miro Sounds, within or outside of this proposal, must be booked through Miro Sounds, unless otherwise agreed in writing.</li>
     </ul>
   </div>
 
@@ -226,10 +239,14 @@
     <p class="about"><strong>About Miro Sounds</strong><br><br>
     We curate and coordinate exceptional music for unforgettable events. From the familiar to the fresh, the refined to the raw, we'll find the perfect pairing of sound & setting to take your music and entertainment to the next level.<br><br>
     Bringing 15 years of expertise across music, events and sound curation, we source from a trusted global network of phenomenal musicians, handpicking authentic talent tailored for each event, without the restrictions of a fixed roster, ensuring every experience feels truly personal.<br><br>
-    Tell us your vision and we'll take it from there, fine-tuning every element to make sure it all flows seamlessly — initial consultation, genre & artist curation, booking & logistics, onsite management.</p>
+    Tell us your vision and we'll take it from there, fine-tuning every element to make sure it all flows seamlessly - initial consultation, genre & artist curation, booking & logistics, onsite management.</p>
     <div class="contact-box">
-      Thanks, and do let us know any feedback — we're always keen to chat and refine to help you find the perfect sounds for every event.<br>
-      mirosounds.com &nbsp;·&nbsp; <a href="mailto:rory@mirosounds.com">rory@mirosounds.com</a> &nbsp;·&nbsp; +44 7444 840 752
+      <p class="contact-note">Thanks, and do let us know any feedback - we're always keen to chat and refine to help you find the perfect sounds for every event.</p>
+      <div class="contact-links">
+        <span>mirosounds.com</span>
+        <a href="mailto:rory@mirosounds.com">rory@mirosounds.com</a>
+        <span>+44 7444 840 752</span>
+      </div>
     </div>
   </footer>
 
@@ -237,6 +254,7 @@
 
 <script>
 const SALTIRE = `<svg class="saltire-badge" width="15" height="15" viewBox="0 0 26 26" aria-hidden="true"><path d="M2 2 L24 24 M24 2 L2 24" stroke="#B7314F" stroke-width="2.6"/></svg>`;
+const ARROW = `<svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B7314F" stroke-width="2.2" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg>`;
 
 const CATEGORIES = [
   {
@@ -246,7 +264,7 @@ const CATEGORIES = [
     summaryDesc:'An iconic Scottish orchestra, collaborating with a top global artist, or putting on an exciting contemporary showcase',
     intro:'An iconic Scottish orchestra: collaborating with <strong>A)</strong> a major artist or <strong>B)</strong> putting on an exciting contemporary showcase:',
     orchestras:[
-      {name:'Royal Scottish National Orchestra (RSNO)', desc:"A leading symphony orchestra — alongside its classical repertoire, the RSNO regularly collaborates with contemporary artists and productions, from its live Queen vs Coldplay show to film and popular music performances."},
+      {name:'Royal Scottish National Orchestra (RSNO)', desc:"A leading symphony orchestra - alongside its classical repertoire, the RSNO regularly collaborates with contemporary artists and productions, from its live Queen vs Coldplay show to film and popular music performances."},
       {name:'Scottish Chamber Orchestra (SCO)', desc:"A leading chamber orchestra, known for its intimacy, versatility and collaborative spirit, regularly working beyond the classical canon, alongside folk musicians, composers and contemporary artists."},
       {name:'BBC Scottish Symphony Orchestra (BBC SSO)', desc:"The BBC's dedicated Scottish orchestra, with a strong track record of ambitious collaborations, including performances with Travis and Texas, alongside regular commissions spanning classical, folk and contemporary music."},
     ],
@@ -265,7 +283,7 @@ const CATEGORIES = [
       'Candlelight Concert Series: Classical renditions of iconic artists, from the Beatles to Rihanna',
       'Electronic music orchestral renditions, e.g. Pete Tong or Ministry of Sound, but options to perform with a more suitable collaborator and genre.',
     ],
-    inspoCallout:"➡️ Opportunity to curate something similarly standout, but with the couple's favourite artists and genres in mind.",
+    inspoCallout:`${ARROW} Opportunity to curate something similarly standout, but with the couple's favourite artists and genres in mind.`,
   },
   {
     id:'classical',
@@ -303,7 +321,7 @@ const CATEGORIES = [
     intro:"Contemporary vocal ensembles, a cappella, puirt à beul and gospel.",
     artists:[
       {name:'The Swingles', scot:false, desc:"Grammy Award-winning vocal ensemble celebrated for their virtuosic a cappella performances and genre-defying arrangements. Blending classical, jazz and contemporary music with remarkable precision, they have redefined vocal performance for more than six decades.", videos:[{id:'03Gn4loM7As', start:57},{id:'j0HcXBlghSQ', start:53, caption:'Contemporary alternative'}]},
-      {name:'Anúna Collective', scot:false, desc:"Founded by Irish composer and conductor Michael McGlynn, internationally recognised for creating contemporary choral music inspired by Celtic traditions. His cinematic vocal writing combines ancient influences with a modern sensibility to create extraordinary music — a strong collaboration option if this is a direction we'd like to pursue. Below: puirt à beul, a traditional form of Scottish Gaelic 'mouth music' where lively vocal rhythms are used to mimic instruments.", videos:[{id:'OM8Uv5RFOyM'}]},
+      {name:'Anúna Collective', scot:false, desc:"Founded by Irish composer and conductor Michael McGlynn, internationally recognised for creating contemporary choral music inspired by Celtic traditions. His cinematic vocal writing combines ancient influences with a modern sensibility to create extraordinary music - a strong collaboration option if this is a direction we'd like to pursue. Below: puirt à beul, a traditional form of Scottish Gaelic 'mouth music' where lively vocal rhythms are used to mimic instruments.", videos:[{id:'OM8Uv5RFOyM'}]},
       {name:'Spokanki', scot:false, desc:"Contemporary vocal ensemble reimagining Eastern European folk through striking a cappella arrangements, movement and rich vocal harmonies. Open to collaborating on Celtic influences as demonstrated below, and it gives a flavour of a more wildcard direction.", videos:[{id:'qmKc0YlrqOI'}]},
     ],
   },
@@ -320,6 +338,10 @@ const CATEGORIES = [
   },
 ];
 
+function slug(str){
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
 function videoFrame(v, label){
   const startParam = v.start ? `?start=${v.start}` : '';
   const embedSrc = `https://www.youtube-nocookie.com/embed/${v.id}${startParam ? startParam+'&autoplay=1' : '?autoplay=1'}`;
@@ -334,7 +356,7 @@ function videoFrame(v, label){
 }
 
 function artistCard(a){
-  return `<div class="artist-card">
+  return `<div class="artist-card${a.videos.length>1?' wide':''}" id="artist-${slug(a.name)}">
     <div class="artist-name-row">
       <span class="artist-name">${a.name}</span>
       ${a.scot ? SALTIRE : ''}
@@ -378,17 +400,30 @@ function renderCategory(cat){
   return html;
 }
 
-// Build jump nav
-document.getElementById('jumpnav').innerHTML = CATEGORIES.map(c=>`<a href="#${c.id}">${c.title.split('×')[0].split('(')[0].trim()}</a>`).join('');
+// Build Friday dropdown nav
+document.getElementById('fridayPanel').innerHTML = CATEGORIES.map(c=>`<a href="#${c.id}">${c.title.split('×')[0].split('(')[0].trim()}</a>`).join('');
 
-// Build summary grid
+const fridayToggle = document.getElementById('fridayToggle');
+const fridayPanel = document.getElementById('fridayPanel');
+fridayToggle.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  const open = fridayPanel.classList.toggle('open');
+  fridayToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+document.addEventListener('click', ()=>{
+  fridayPanel.classList.remove('open');
+  fridayToggle.setAttribute('aria-expanded','false');
+});
+fridayPanel.addEventListener('click', (e)=>e.stopPropagation());
+
+// Build summary grid (category + linked artist list, PDF-table style but compact)
 document.getElementById('summary-grid').innerHTML = CATEGORIES.map((c,i)=>`
-  <a class="summary-card" href="#${c.id}">
+  <div class="summary-card">
     <span class="num">0${i+1}</span>
-    <h4>${c.title}</h4>
+    <h4><a href="#${c.id}">${c.title}</a></h4>
     <p>${c.summaryDesc}</p>
-    <span class="count">${c.artists.length} artist${c.artists.length>1?'s':''}${c.orchestras?' · 3 orchestras':''}</span>
-  </a>`).join('');
+    <div class="summary-artists">${c.artists.map((a,j)=>`<a href="#artist-${slug(a.name)}">${a.name}</a>${j<c.artists.length-1?'<span class="sep">·</span>':''}`).join('')}</div>
+  </div>`).join('');
 
 // Build category sections
 document.getElementById('categories').innerHTML = CATEGORIES.map(renderCategory).join('');
