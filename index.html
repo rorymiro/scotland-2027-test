@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scotland 2027 | LLE × Miro Sounds</title>
+
+<!-- Google Analytics (GA4) - replace G-FRMS66W3JP with your real Measurement ID, both places below -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMS66W3JP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FRMS66W3JP');
+</script>
 <style>
   @font-face{
     font-family:'Atelier';
@@ -634,6 +643,40 @@ document.getElementById('categories').innerHTML = CATEGORIES.map(renderCategory)
 
 // Build Saturday moment sections
 document.getElementById('moments').innerHTML = SATURDAY.map(renderMoment).join('');
+
+// Section engagement tracking (which parts of the page people actually spend time on)
+if (typeof gtag === 'function') {
+  const sectionTimers = {};
+  const trackedSections = document.querySelectorAll('section[id]');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const label = entry.target.querySelector('h2') ? entry.target.querySelector('h2').textContent : id;
+      if (entry.isIntersecting) {
+        sectionTimers[id] = Date.now();
+        gtag('event', 'section_view', { section_id: id, section_label: label });
+      } else if (sectionTimers[id]) {
+        const seconds = Math.round((Date.now() - sectionTimers[id]) / 1000);
+        if (seconds >= 2) {
+          gtag('event', 'section_engagement', { section_id: id, section_label: label, engagement_seconds: seconds });
+        }
+        delete sectionTimers[id];
+      }
+    });
+  }, { threshold: 0.35 });
+  trackedSections.forEach(s => sectionObserver.observe(s));
+
+  // Catch whichever sections are still open if the person closes the tab
+  window.addEventListener('beforeunload', () => {
+    Object.keys(sectionTimers).forEach(id => {
+      const seconds = Math.round((Date.now() - sectionTimers[id]) / 1000);
+      if (seconds >= 2) {
+        gtag('event', 'section_engagement', { section_id: id, engagement_seconds: seconds });
+      }
+    });
+  });
+}
+
 </script>
 
 </body>
